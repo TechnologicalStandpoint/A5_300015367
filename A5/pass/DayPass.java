@@ -12,8 +12,10 @@ public class DayPass implements Pass {
   private int daysDuration;
   private String name;
   private String address;
-  private String startDate;
-  private String endDate;
+  private String start;
+  private String end;
+  private LocalDateTime startDate;
+  private LocalDateTime endDate;
   private int serialNumber;
 
   public DayPass( String n, String ad, int duration, int serial ) {
@@ -24,10 +26,13 @@ public class DayPass implements Pass {
 
     serialNumber = serial;
 
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern( "yyyy/MM/dd" );
-    LocalDateTime timeStart = LocalDateTime.now();
-    startDate = dtf.format( timeStart );
-    endDate = dtf.format( timeStart.plusDays(duration));
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern( "MM/dd/yyyy" );
+    startDate = LocalDateTime.now();
+    endDate = startDate.plusDays( duration );
+
+    start = dtf.format( startDate );
+    end = dtf.format( endDate );
+
   }
 
   public int getSerialNumber() {
@@ -42,8 +47,8 @@ public class DayPass implements Pass {
     return address;
   }
 
-  public String getEnd() {
-    return startDate;
+  public LocalDateTime getEnd() {
+    return endDate;
   }
 
   public void print() {
@@ -51,7 +56,7 @@ public class DayPass implements Pass {
 
     System.out.println( "Name: " + name );
     System.out.println( "Serial Number: " + serialNumber );
-    System.out.println( "Start Date: " + startDate );
-    System.out.println( "Start Date: " + endDate);
+    System.out.println( "Start Date: " + start );
+    System.out.println( "Start Date: " + end);
   }
 }

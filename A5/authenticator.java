@@ -2,37 +2,46 @@ import pass.*;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
-public class authenticator {
+public class Authenticator {
 
-  database db;
+  Database db;
+  Authenticator auth;
 
-  public authenticator(database thisDatabase) {
+  public Authenticator( Database thisDatabase ) {
     db = thisDatabase;
+    auth = new Authenticator( db );
   }
 
-  public Boolean validSerialNumber(int ID) {
+  public Boolean validSerialNumber( int ID ) {
     try {
 
-      db.find(ID);
+      db.find( ID );
       return true;
     }
 
-    catch(IndexOutOfBoundsException ex) {
-      System.out.println("Not a valid ticket!");
+    catch( IndexOutOfBoundsException ex ) {
+      System.out.println( "Not a valid ticket!" );
 
       return false;
     }
   }
 
-  public Boolean validExpirationDate(int ID) {
-
-    Pass pass = db.find(ID);
+  public Boolean validExpirationDate( Pass pass ) {
 
     LocalDateTime now = LocalDateTime.now();
-    return true;
-    /*if (now.isAfter(ID.getEnd())) {
+    if ( now.isAfter( pass.getEnd() ) ) {
+      System.out.println( "This pass has expired" );
+      return false;
+    }
 
-    }*/
+    else return true;
+  }
+
+  public Boolean authenticate( int id ) {
+
+    Pass p = db.find(id);
+
+    return validSerialNumber( id ) && validExpirationDate( p );
   }
 
 }

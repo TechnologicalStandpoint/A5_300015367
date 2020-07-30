@@ -5,12 +5,12 @@ import java.io.*;
 import java.util.ArrayList;
 
 
-public class database {
+public class Database {
 
   private ArrayList<Pass> db;
   private int serial;
 
-  public database() {
+  public Database() {
 
     db = new ArrayList<>();
 
@@ -100,33 +100,42 @@ public class database {
               System.out.println( "\nEnter the type of Pass" );
               message = fromConsole.readLine();
 
-              if ( message.equals( "DayPass" ) ) {
+              Boolean flagOne = true;
 
-                System.out.println( "\nEnter the duration of the pass" );
-                Boolean flag = true;
+              while ( flagOne ) {
 
-                int duration = 0;
-                while ( flag ) {
-                  try {
-                    duration = Integer.parseInt( fromConsole.readLine() );
-                    flag = false;
+                if ( message.equals( "DayPass" ) ) {
+
+                  System.out.println( "\nEnter the duration of the pass" );
+                  Boolean flagTwo = true;
+
+                  int duration = 0;
+                  while ( flagTwo ) {
+                    try {
+                      duration = Integer.parseInt( fromConsole.readLine() );
+                      flag = false;
+                    }
+
+                    catch ( Exception ex ) {
+                      System.out.println( "Must enter an integer.  Try again" );
+                    }
                   }
 
-                  catch ( Exception ex ) {
-                    System.out.println( "Must enter an integer.  Try again" );
-                  }
+                  DayPass newPass = newDayPass( name, address, duration );
                 }
 
-                DayPass newPass = newDayPass( name, address, duration );
-              }
-
-              else if ( message.equals( "Seasons Pass" ) ) {
-                SeasonsPass newPass = newSeasonsPass(name, address);
+                else if ( message.equals( "Seasons Pass" ) ) {
+                  SeasonsPass newPass = newSeasonsPass( name, address );
+                }
               }
               break;
 
             case "Authenticate":
               System.out.println( "Enter Serial Number \n" );
+
+              message = fromConsole.readLine();
+
+              auth.authenticate( Integer.parseInt( message ) );
 
               break;
 

@@ -9,6 +9,7 @@ public class mainSystem {
 
   public static void main(String [] args) {
     database db = new database();
+    authenticator auth = new authenticator(db);
     DayPass newPass = db.newDayPass("Will", "Calgary", 2);
 
     newPass.print();

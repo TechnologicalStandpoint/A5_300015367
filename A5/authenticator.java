@@ -2,18 +2,18 @@ import pass.*;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
-public class authenticate {
+public class authenticator {
 
-  database dbb;
+  database db;
 
-  public authenticate(database db) {
-    dbb = db;
+  public authenticator(database thisDatabase) {
+    db = thisDatabase;
   }
 
   public Boolean validSerialNumber(int ID) {
     try {
 
-      dbb.find(ID);
+      db.find(ID);
       return true;
     }
 
@@ -26,7 +26,7 @@ public class authenticate {
 
   public Boolean validExpirationDate(int ID) {
 
-    Pass pass = dbb.find(ID);
+    Pass pass = db.find(ID);
 
     LocalDateTime now = LocalDateTime.now();
     return true;

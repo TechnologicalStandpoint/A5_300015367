@@ -7,19 +7,12 @@ import java.util.ArrayList;
 
 public class database {
 
-  private ArrayList<Pass> dayPass;
-  private ArrayList<Pass> seasonsPass;
-  private ArrayList[] types;
+  private ArrayList<Pass> db;
   private int serial;
 
   public database() {
 
-    types = new ArrayList[2];
-    dayPass = new ArrayList<>();
-    seasonsPass = new ArrayList<>();
-
-    types[0] = dayPass;
-    types[1] = seasonsPass;
+    db = new ArrayList<>();
 
     serial = 0;
 
@@ -29,7 +22,7 @@ public class database {
 
     if ( checkDuration( duration ) ) {
       DayPass newPass = new DayPass( name, address, duration, serial );
-      types[0].add( newPass );
+      db.add( newPass );
       serial++;
 
       System.out.println( name + " has a new "+Integer.toString( duration ) + " day ticket! Enjoy the slopes!" );
@@ -43,48 +36,36 @@ public class database {
 
   public SeasonsPass newSeasonsPass( String name, String address ) {
     SeasonsPass newPass = new SeasonsPass( name, address, serial );
-    types[1].add(newPass);
+    db.add( newPass );
     serial++;
+    System.out.println( name + " has a new Seasons Pass! Enjoy the slopes!" );
     return newPass;
   }
 
   public Pass remove( Pass p ) {
 
-    try {
-      if ( p instanceof DayPass ) {
-       types[0].remove( p );
-     }
-
-     else if ( p instanceof SeasonsPass ) {
-       types[1].remove( p );
-     }
+   try {
+      db.remove( p );
+      return p;
    }
-
    catch ( Exception ex ) {
      System.out.println("This pass is not in our database");
    }
-
-    return p;
+   return null;
   }
 
   public Pass find( int ID ) {
     Pass p;
     try {
-      p = types[0].get( ID );
+      p = db.get( ID );
+      return p;
     }
 
     catch ( Exception ex ) {
 
-      try {
-        p = types[1].get( ID );
-      }
-
-      catch( Exception e ) {
-        System.out.println( "This pass does not exist" );
-      }
+      System.out.println( "This pass does not exist" );
+      return null;
     }
-
-    return p;
   }
 
   public Boolean checkDuration( int dur ) {
@@ -151,7 +132,10 @@ public class database {
 
             case "GetInformation":
               System.out.println( "Enter the Serial number of the ticket holder" );
+              message = fromConsole.readLine();
 
+              Pass get = find(Integer.parseInt(message));
+              get.print();
               break;
           }
         }

@@ -7,105 +7,157 @@ import java.util.ArrayList;
 
 public class database {
 
-  private ArrayList<Pass> db;
+  private ArrayList<Pass> dayPass;
+  private ArrayList<Pass> seasonsPass;
+  private ArrayList[] types;
   private int serial;
 
   public database() {
 
-    db = new ArrayList<>();
+    types = new ArrayList[2];
+    dayPass = new ArrayList<>();
+    seasonsPass = new ArrayList<>();
+
+    types[0] = dayPass;
+    types[1] = seasonsPass;
+
     serial = 0;
 
   }
 
-  public DayPass newDayPass(String name, String address, int duration) {
-    DayPass newPass = new DayPass(name, address, duration, serial);
-    serial++;
-    return newPass;
+  public DayPass newDayPass( String name, String address, int duration ) {
+
+    if ( checkDuration( duration ) ) {
+      DayPass newPass = new DayPass( name, address, duration, serial );
+      types[0].add( newPass );
+      serial++;
+
+      System.out.println( name + " has a new "+Integer.toString( duration ) + " day ticket! Enjoy the slopes!" );
+      return newPass;
+    }
+
+    System.out.println( "Duration of the ticket must be between 0 and 3." +
+    "  Try again or buy a seasons pass" );
+    return null;
   }
 
-  public SeasonsPass newSeasonsPass(String name, String address) {
-    SeasonsPass newPass = new SeasonsPass(name, address);
+  public SeasonsPass newSeasonsPass( String name, String address ) {
+    SeasonsPass newPass = new SeasonsPass( name, address, serial );
+    types[1].add(newPass);
     serial++;
     return newPass;
-  }
-
-  public void add( Pass p ) {
-    db.add( p );
   }
 
   public Pass remove( Pass p ) {
-    db.remove( p );
+
+    try {
+      if ( p instanceof DayPass ) {
+       types[0].remove( p );
+     }
+
+     else if ( p instanceof SeasonsPass ) {
+       types[1].remove( p );
+     }
+   }
+
+   catch ( Exception ex ) {
+     System.out.println("This pass is not in our database");
+   }
 
     return p;
   }
 
   public Pass find( int ID ) {
-    return db.get( ID );
+    Pass p;
+    try {
+      p = types[0].get( ID );
+    }
+
+    catch ( Exception ex ) {
+
+      try {
+        p = types[1].get( ID );
+      }
+
+      catch( Exception e ) {
+        System.out.println( "This pass does not exist" );
+      }
+    }
+
+    return p;
+  }
+
+  public Boolean checkDuration( int dur ) {
+    if ( dur > 0 && dur < 4 ) {
+      return true;
+    }
+
+    else return false;
   }
 
   public void accept() {
 
       String message;
       try {
-        BufferedReader fromConsole = new BufferedReader(new InputStreamReader(System.in));
-        message = fromConsole.readLine();
+
+        BufferedReader fromConsole = new BufferedReader( new InputStreamReader( System.in ) );
+        System.out.println( "\nEnter a command" );
 
         while (true) {
-          switch (message) {
+
+          message = fromConsole.readLine();
+
+          switch ( message ) {
 
             case "NewPass":
-              System.out.println("Enter the persons name");
+              System.out.println( "\nEnter the persons name" );
               String name = fromConsole.readLine();
 
-              System.out.println("Enter the address");
+              System.out.println( "\nEnter the address" );
               String address = fromConsole.readLine();
 
-              System.out.println("Enter the type of Pass");
-              String pass = fromConsole.readLine();
+              System.out.println( "\nEnter the type of Pass" );
+              message = fromConsole.readLine();
 
-              if ( pass == "Day Pass" ) {
+              if ( message.equals( "DayPass" ) ) {
 
-                System.out.println("Enter the duration of the pass");
+                System.out.println( "\nEnter the duration of the pass" );
                 Boolean flag = true;
 
                 int duration = 0;
-                while (flag) {
+                while ( flag ) {
                   try {
-                    duration = Integer.parseInt(fromConsole.readLine());
+                    duration = Integer.parseInt( fromConsole.readLine() );
                     flag = false;
                   }
 
-                  catch (Exception ex) {
-                    System.out.println("Must enter an integer.  Try again");
+                  catch ( Exception ex ) {
+                    System.out.println( "Must enter an integer.  Try again" );
                   }
                 }
 
-                DayPass newPass = new DayPass(name, address, duration, serial);
-                System.out.println(name+" has a new "+Integer.toString(duration)+" pass! Enjoy the slopes!");
-                newPass.print();
-                serial++;
+                DayPass newPass = newDayPass( name, address, duration );
               }
 
-              else if ( pass == "Seasons Pass") {
-
+              else if ( message.equals( "Seasons Pass" ) ) {
+                SeasonsPass newPass = newSeasonsPass(name, address);
               }
               break;
 
             case "Authenticate":
-              System.out.println( "Enter Serial Number \n");
+              System.out.println( "Enter Serial Number \n" );
 
               break;
 
             case "GetInformation":
-              System.out.println("Enter the name or Serial number of the ticket holder");
+              System.out.println( "Enter the Serial number of the ticket holder" );
 
               break;
-
           }
         }
       }
 
-      catch(Exception ex) {
+      catch( Exception ex ) {
 
       }
   }

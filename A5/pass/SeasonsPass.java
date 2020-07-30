@@ -2,8 +2,6 @@
 // license:
 package pass;
 
-
-import java.util.Random;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
@@ -15,7 +13,7 @@ public class SeasonsPass implements Pass {
   private String endDate;
   private int serialNumber;
 
-  public SeasonsPass( String n, String a ) {
+  public SeasonsPass( String n, String a, int serial ) {
 
     name = n;
     address = a;
@@ -25,7 +23,7 @@ public class SeasonsPass implements Pass {
     startDate = dtf.format( timeStart );
     endDate = "2021/04/31";
 
-    serialNumber = ( int ) ( Math.random() * 100000 );
+    serialNumber = serial;
   }
 
   public int getSerialNumber() {

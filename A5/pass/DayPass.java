@@ -58,7 +58,7 @@ public class DayPass implements Pass {
     return endDate;
   }
 
-  public void changeEnd(int minusStart, int minusEnd) {
+  public void changeDates(int minusStart, int minusEnd) {
     startDate = startDate.minusDays(minusStart);
     endDate = endDate.minusDays(minusEnd);
   }

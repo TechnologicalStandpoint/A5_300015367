@@ -21,7 +21,7 @@ public class mainSystem {
     Database db = new Database();
 
     DayPass newPass = db.newDayPass("Will", "Calgary", 2);
-    newPass.changeEnd(2,5);
+    newPass.changeDates(2,5);
 
     newPass.print();
 

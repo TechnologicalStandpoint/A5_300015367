@@ -73,13 +73,17 @@ public class Database {
   */
 
   public SeasonsPass newSeasonsPass( String name, String address ) {
+
     SeasonsPass newPass = new SeasonsPass( name, address, serial );
+
     if (auth.validExpirationDate(newPass)) {
+
       db.add( newPass );
       serial++;
       System.out.println( name + " has a new Seasons Pass! Enjoy the slopes!" );
       return newPass;
     }
+    
     else {
       System.out.println("Not a valid expiration date.  Deleting pass");
       return null;
@@ -137,9 +141,9 @@ public class Database {
   }
 
   /* A method accepting input from the commandline, acting as the user interface.
-     Allows the user to accept commands and call methods.
+     Allows the user to call methods.
      Taking the barebone structure of the accept method in Assignment 1, file
-     ClientConsole.java.
+     ClientConsole.java to properly implement the flow of logic for the input
   */
   public void accept() {
 
@@ -172,6 +176,7 @@ public class Database {
                 //Creation of a Day Pass
                 if ( message.equals( "DayPass" ) ) {
 
+
                   System.out.println( "\nEnter the duration of the pass" );
                   Boolean flagTwo = true;
 
@@ -180,7 +185,7 @@ public class Database {
                     try {
                       duration = Integer.parseInt( fromConsole.readLine() );
                       flagTwo = false;
-                      flagOne = false
+
                     }
 
                     catch ( Exception ex ) {
@@ -189,11 +194,13 @@ public class Database {
                   }
 
                   DayPass newPass = newDayPass( name, address, duration );
+                  flagOne = false;
                 }
 
                 //Creation of a Seasons Pass
                 else if ( message.equals( "Seasons Pass" ) ) {
                   SeasonsPass newPass = newSeasonsPass( name, address );
+                  flagOne = false;
                 }
               }
               break;
@@ -213,9 +220,12 @@ public class Database {
               System.out.println( "Enter the Serial number of the ticket holder" );
               message = fromConsole.readLine();
 
-              Pass get = find(Integer.parseInt(message));
+              Pass get = find( Integer.parseInt( message ) );
               get.print();
               break;
+
+            default:
+              System.out.println( "\nInvalid command.  Try again" );
           }
         }
       }

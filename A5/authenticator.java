@@ -11,15 +11,22 @@ import pass.*;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
+/*
+  An authenticator class used to determine the validity of each DayPass and
+  Seasons Pass.
+*/
+
 public class Authenticator {
 
   Database db;
-  Authenticator auth;
 
   public Authenticator( Database thisDatabase ) {
     db = thisDatabase;
-    auth = new Authenticator( db );
   }
+
+  //Checks that the ticket with serial number ID is contained within the
+  //database.
+  // @param ID- serial number of the ticket
 
   public Boolean validSerialNumber( int ID ) {
     try {
@@ -35,6 +42,8 @@ public class Authenticator {
     }
   }
 
+  // Check the expiration date of each ticket
+  // @param pass- ticket to check
   public Boolean validExpirationDate( Pass pass ) {
 
     LocalDateTime now = LocalDateTime.now();
@@ -45,7 +54,9 @@ public class Authenticator {
 
     else return true;
   }
-
+  // Method that checks the validity of the expiration date and serial number
+  // @param id- serial number of the ticket
+  //
   public Boolean authenticate( int id ) {
 
     Pass p = db.find(id);

@@ -16,8 +16,10 @@ public class SeasonsPass implements Pass {
 
   private String address;
   private String name;
-  private String startDate;
-  private String endDate;
+  private LocalDateTime startDate;
+  private LocalDateTime endDate;
+  private String start;
+  private String end;
   private int serialNumber;
 
   public SeasonsPass( String n, String a, int serial ) {
@@ -25,10 +27,12 @@ public class SeasonsPass implements Pass {
     name = n;
     address = a;
 
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern( "yyyy/MM/dd" );
-    LocalDateTime timeStart = LocalDateTime.now();
-    startDate = dtf.format( timeStart );
-    endDate = "2021/04/31";
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern( "MM/dd/yyyy" );
+    startDate = LocalDateTime.now();
+    endDate = startDate.plusMonths(4);
+
+    start = dtf.format( startDate );
+    end = dtf.format( endDate );
 
     serialNumber = serial;
   }
@@ -45,7 +49,7 @@ public class SeasonsPass implements Pass {
     return address;
   }
 
-  public String getEnd() {
+  public LocalDateTime getEnd() {
     return endDate;
   }
 

@@ -249,6 +249,8 @@ public class Database {
                 try {
                   Pass get = find( Integer.parseInt( message ) );
                   get.print();
+
+                  flag = false;
                 }
 
                 catch (Exception e) {

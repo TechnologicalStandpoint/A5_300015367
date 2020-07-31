@@ -57,6 +57,7 @@ public class SeasonsPass implements Pass {
     System.out.println( "Pass informatin\n" );
 
     System.out.println( "Name: " + name );
+    System.out.println( "Addres: " + address);
     System.out.println( "Serial Number: " + serialNumber );
     System.out.println( "Start Date: " + startDate );
     System.out.println( "Start Date: " + endDate );

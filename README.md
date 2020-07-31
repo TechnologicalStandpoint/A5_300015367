@@ -13,3 +13,5 @@ Important Aspects of this system:
     does the majority of the data processing for creating, manipulating, and
     deleting objects.
 
+  Authenticator.java- Authenticates each ticket, ensuring that the ticket has
+    not expired and that it has a valid serial number

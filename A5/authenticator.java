@@ -36,7 +36,7 @@ public class Authenticator {
     }
 
     catch( IndexOutOfBoundsException ex ) {
-      System.out.println( "Not a valid ticket!" );
+      System.out.println( "Not a valid serial number!" );
 
       return false;
     }

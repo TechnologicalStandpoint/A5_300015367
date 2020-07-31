@@ -83,7 +83,7 @@ public class Database {
       System.out.println( name + " has a new Seasons Pass! Enjoy the slopes!" );
       return newPass;
     }
-    
+
     else {
       System.out.println("Not a valid expiration date.  Deleting pass");
       return null;
@@ -151,9 +151,10 @@ public class Database {
       try {
 
         BufferedReader fromConsole = new BufferedReader( new InputStreamReader( System.in ) );
-        System.out.println( "\nEnter a command" );
+
 
         while (true) {
+          System.out.println( "\nEnter a command" );
 
           message = fromConsole.readLine();
 
@@ -184,6 +185,7 @@ public class Database {
                   while ( flagTwo ) {
                     try {
                       duration = Integer.parseInt( fromConsole.readLine() );
+                      DayPass newPass = newDayPass( name, address, duration );
                       flagTwo = false;
 
                     }
@@ -193,7 +195,7 @@ public class Database {
                     }
                   }
 
-                  DayPass newPass = newDayPass( name, address, duration );
+
                   flagOne = false;
                 }
 
@@ -209,19 +211,51 @@ public class Database {
             case "Authenticate":
               System.out.println( "Enter Serial Number \n" );
 
-              message = fromConsole.readLine();
+              Boolean integer = true;
 
-              auth.authenticate( Integer.parseInt( message ) );
+              while (integer) {
+                message = fromConsole.readLine();
+
+                try {
+                  int i = Integer.parseInt( message );
+                  integer = false;
+                }
+
+                catch ( Exception ex ) {
+                  System.out.println( "You must enter a valid integer" );
+                }
+              }
+
+              if ( auth.authenticate( Integer.parseInt( message ) ) ) {
+                System.out.println( "This is a valid ticket" );
+                this.find( Integer.parseInt(message) ).print();
+              }
+
+              else {
+                System.out.println( "This is an invalid ticket" );
+              }
 
               break;
 
             //Case to get information about specific ticket
             case "GetInformation":
-              System.out.println( "Enter the Serial number of the ticket holder" );
-              message = fromConsole.readLine();
 
-              Pass get = find( Integer.parseInt( message ) );
-              get.print();
+              Boolean flag = true;
+              while (flag) {
+
+                System.out.println( "Enter the Serial number of the ticket holder" );
+                message = fromConsole.readLine();
+
+                try {
+                  Pass get = find( Integer.parseInt( message ) );
+                  get.print();
+                }
+
+                catch (Exception e) {
+                  System.out.println( "\nInvalid input" );
+                }
+
+            }
               break;
 
             default:

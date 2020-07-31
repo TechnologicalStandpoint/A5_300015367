@@ -67,6 +67,7 @@ public class DayPass implements Pass {
     System.out.println( "Pass informatin\n" );
 
     System.out.println( "Name: " + name );
+    System.out.println( "Address: " + address );
     System.out.println( "Serial Number: " + serialNumber );
     System.out.println( "Start Date: " + start );
     System.out.println( "Start Date: " + end);

@@ -9,7 +9,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 import pass.*;
 /*
-
+   Main class of the system, contains the database for the different passes
 */
 
 import java.util.ArrayList;

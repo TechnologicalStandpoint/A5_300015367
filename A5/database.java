@@ -175,7 +175,7 @@ public class Database {
                 message = fromConsole.readLine();
 
                 //Creation of a Day Pass
-                if ( message.equals( "DayPass" ) ) {
+                if ( message.equals( "Day Pass" ) ) {
 
 
                   System.out.println( "\nEnter the duration of the pass" );
@@ -209,7 +209,7 @@ public class Database {
 
             //Case to authenticate a ticket
             case "Authenticate":
-              System.out.println( "Enter Serial Number \n" );
+              System.out.println( "Enter Serial Number " );
 
               Boolean integer = true;
 
